@@ -205,36 +205,3 @@ html, body {
   left: 6px;         
 }
 
-.boxset {
-  width: 100px;        
-  height: 100px;       
-  border-radius: 45px; 
-  background-color: #ff00008f; 
-  box-shadow: 0 0 45px 10px rgba(0, 121, 94, 0.788); 
-
-  /* Позиционирование */
-  position: absolute;  
-  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
-  pointer-events: none;
-
-  /* Координаты (крути их, чтобы подвинуть куда надо) */
-  top: 600px;          
-  left: 150px;         
-}
-
-.boxxz {
-  width: 100px;        
-  height: 100px;       
-  border-radius: 45px; 
-  background-color: #ff00008f; 
-  box-shadow: 0 0 45px 10px rgba(0, 121, 94, 0.788); 
-
-  /* Позиционирование */
-  position: absolute;  
-  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
-  pointer-events: none;
-
-  /* Координаты (крути их, чтобы подвинуть куда надо) */
-  top: 600px;          
-  left: 300px;         
-}
