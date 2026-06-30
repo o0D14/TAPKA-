@@ -1,61 +1,247 @@
+/* Полностью убираем прокрутку и отскоки на уровне самого браузера */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;           /* Запрещает любую прокрутку (и вбок, и вверх-вниз) */
+  overscroll-behavior: none;  /* ОТКЛЮЧАЕТ мобильный "отскок" экрана при натягивании пальцем */
+  background-color: #000000;  /* На всякий случай красим подложку в черный, а не белый */
+}
+
+/* Намертво прибиваем обёртку игры к экрану */
+.game-wrapper {
+  position: fixed;            /* Фиксирует игру на одном месте, её теперь нельзя сдвинуть */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  
+  /* МАГИЯ ПРОТИВ БЕЛОЙ ПОЛОСЫ СНИЗУ: */
+  height: 100vh;              
+  height: 100dvh;             /* Свойство dvh динамически подстраивается под шторку мобильного браузера */
+  
+  overflow: hidden;           /* Жестко обрезает всё, что пытается вылезти */
+  
+  /* Идеальное растягивание твоей картинки fon1.png */
+  background-image: url('fon1.png');
+  background-size: cover;     /* Картинка автоматически раздувается так, чтобы закрыть КАЖДЫЙ пиксель экрана */
+  background-position: center;/* Картинка ровняется строго по центру */
+  background-repeat: no-repeat;
+}
+
+/* Защита кнопки от зума при быстрых тапах */
+#click {
+  touch-action: manipulation;
+}
+
+
+
 #Priv {
  
-  font-family: 'Arial', sans-serif; /* Название шрифта */
-  font-size: 32px;                  /* Размер (больше цифра — больше текст) */
-  color: #a647ff;                   /* Цвет текста */
+  font-family: 'Comic Sans MS', cursive; /* Название шрифта */
+  font-size: 60px;                  /* Размер (больше цифра — больше текст) */
+  color: #ec1a59;                   /* Цвет текста */
   font-weight: bold;                /* Жирность (bold — жирный, normal — обычный) */
 
   position: relative; /* Включает режим свободного перемещения */
   
-  top: 230px;    /* вниз вверх */
-  left: 130px;   /* лево право */
+  top: 100px;    /* вниз вверх */
+  left: 100px;   /* лево право */
   z-index: 10; /*e*/
   
 }
 
 
 /* Это лежит кнопка перехода с главного на тап*/
+
+/* From Uiverse.io by MuhammadHasann */ 
 #click {
-  /* ТВОИ РАЗМЕРЫ И ПОЗИЦИЯ (ОСТАВИЛ КАК БЫЛО) */
-  width: 130px;
-  height: 120px;
-  border-radius: 60%; /* Кстати, при таких размерах она выйдет овальной и аккуратной */
-  position: relative;
-  top: 240px;  
-  left: 135px;  
+  --black-700: hsla(0 0% 12% / 1);
+  --border_radius: 9999px;
+  --transtion: 0.3s ease-in-out;
+  --offset: 2px;
 
-  /* ТВОИ ШРИФТЫ И ЦВЕТА */
-  font-family: 'Impact', sans-serif; 
-  background-color: #ff47568f; 
-  color: rgba(30, 253, 0, 0.74);              
-  font-size: 16px;           
-  font-weight: bold;         
-  border: none;              
-  cursor: pointer;           
-
-  /* --- ЧТО МЫ ДОБАВЛЯЕМ ДЛЯ КРАСОТЫ --- */
+  cursor: pointer;
   
-  /* 1. Добавляем неоновую тень под цвет текста, чтобы кнопка казалась объёмной */
-  box-shadow: 0 6px 15px rgba(55, 0, 253, 0.733);
+  /* Новая позиция */
+  position: absolute;
+  top: 440px;
+  left: 80px;
 
-  /* 2. ГЛАВНОЕ: убираем резкость! 
-     4s — это скорость анимации. Теперь любое изменение произойдет плавно за 200 миллисекунд. */
-  transition: all 4s ease-in-out;
-  
-  /* Убираем синюю рамку, которая иногда вылезает в браузерах при клике */
-  outline: none; 
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Немного увеличил зазор между иконкой и текстом */
+
+  transform-origin: center;
+
+  /* Увеличил padding, чтобы кнопка стала больше */
+  padding: 1.5rem 3.5rem; 
+  background-color: transparent;
+
+  border: none;
+  border-radius: var(--border_radius);
+  transform: scale(calc(1 + (var(--active, 0) * 0.1)));
+
+  transition: transform var(--transtion);
 }
 
-/* --- 3. ЭФФЕКТ ПРИ НАВЕДЕНИИ МЫШКИ (:hover) --- */
-#click:hover {
-  /* Кнопка станет чуть ярче */
-  background-color: #ff2a3b; 
-  
-  /* Тень под кнопкой станет сильнее, как будто она приподнялась */
-  box-shadow: 0 8px 25px rgba(0, 46, 253, 0.692); 
-  
-  /* Кнопка плавно увеличится на 3% (очень приятный глазу эффект) */
-  transform: scale(1.03); 
+#click::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+  background-color: var(--black-700);
+
+  border-radius: var(--border_radius);
+  box-shadow: inset 0 0.5px hsl(0, 0%, 100%), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
+    0px 4px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
+    0 0 0 calc(var(--active, 0) * 0.375rem) hsl(260 97% 50% / 0.75);
+
+  transition: all var(--transtion);
+  z-index: 0;
+}
+
+#click::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+  background-color: hsla(260 97% 61% / 0.75);
+  background-image: radial-gradient(
+      at 51% 89%,
+      hsla(266, 45%, 74%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
+    radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
+  background-position: top;
+
+  opacity: var(--active, 0);
+  border-radius: var(--border_radius);
+  transition: opacity var(--transtion);
+  z-index: 2;
+}
+
+#click:is(:hover, :focus-visible) {
+  --active: 1;
+}
+#click:active {
+  transform: scale(1);
+}
+
+#click .dots_border {
+  --size_border: calc(100% + 2px);
+
+  overflow: hidden;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: var(--size_border);
+  height: var(--size_border);
+  background-color: transparent;
+
+  border-radius: var(--border_radius);
+  z-index: -10;
+}
+
+#click .dots_border::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: left;
+  transform: rotate(0deg);
+
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+
+  mask: linear-gradient(transparent 0%, white 120%);
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#click .sparkle {
+  position: relative;
+  z-index: 10;
+
+  /* Увеличил размер искорки */
+  width: 2.25rem; 
+}
+
+#click .sparkle .path {
+  fill: currentColor;
+  stroke: currentColor;
+
+  transform-origin: center;
+
+  color: hsl(0, 0%, 100%);
+}
+
+#click:is(:hover, :focus) .sparkle .path {
+  animation: path 1.5s linear 0.5s infinite;
+}
+
+#click .sparkle .path:nth-child(1) {
+  --scale_path_1: 1.2;
+}
+#click .sparkle .path:nth-child(2) {
+  --scale_path_2: 1.2;
+}
+#click .sparkle .path:nth-child(3) {
+  --scale_path_3: 1.2;
+}
+
+@keyframes path {
+  0%,
+  34%,
+  71%,
+  100% {
+    transform: scale(1);
+  }
+  17% {
+    transform: scale(var(--scale_path_1, 1));
+  }
+  49% {
+    transform: scale(var(--scale_path_2, 1));
+  }
+  83% {
+    transform: scale(var(--scale_path_3, 1));
+  }
+}
+
+#click .text_button {
+  position: relative;
+  z-index: 10;
+
+  background-image: linear-gradient(
+    90deg,
+    hsla(0 0% 100% / 1) 0%,
+    hsla(0 0% 100% / var(--active, 0)) 120%
+  );
+  background-clip: text;
+
+  /* Увеличил размер шрифта */
+  font-size: 1.5rem; 
+  font-weight: bold; /* Сделал текст чуть плотнее, так лучше смотрится */
+  color: transparent;
 }
 
 /* --- 4. ЭФФЕКТ ПРИ КЛИКЕ (:active) --- */
@@ -72,18 +258,3 @@
 
 
 
-
-
-.color-fon {
-    width: 1000px;              
-    height: 1000px;             /* Размер оставляем ровно таким, как тебе нужно */
-    background-color: rgb(0, 247, 255); 
-    padding: 20px; 
-
-    /* ВОТ ЭТИ СТРОЧКИ ДЕЛАЮТ МАГИЮ В ИГРЕ: */
-    position: absolute;  /* 1. Элемент теперь не толкает текст и кнопки вниз */
-    z-index: -1;         /* 2. Проваливает куб на самый задний план (под текст) */
-    
-    top: 0px;           /* 3. Позиция самого куба на экране (можешь менять цифры) */
-    left: 0px;          /*    чтобы двигать сам куб куда захочешь */
-}

@@ -1,3 +1,40 @@
+/* Полностью блокируем прокрутку браузера */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background-color: #000000; /* Подложка на случай долгой загрузки картинки */
+}
+
+/* Намертво фиксируем фон и обрезаем всё, что торчит */
+.game-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Подстраивается под мобильную шторку браузера */
+  overflow: hidden;
+  
+  /* ТУТ ПОДКЛЮЧАЕМ ВТОРУЮ ФОТКУ */
+  background-image: url('fon2.png');
+  background-size: cover;       /* Картинка закроет весь экран без белых полос */
+  background-position: center;  /* Ровно по центру */
+  background-repeat: no-repeat;
+}
+
+/* Разрешаем клики по кнопке, но запрещаем её зумить */
+#Tap {
+  touch-action: manipulation;
+  
+  /* Ниже можешь писать свои старые стили для кнопки (размер, цвет и т.д.) */
+}
+
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -23,9 +60,9 @@ html, body {
   /* ========================================================== */
   /* 1. СТИЛЬ (Шрифт, размер, цвет)                             */
   /* ========================================================== */
-  font-family: 'Arial', sans-serif; /* Название шрифта */
+  font-family: 'Comic Sans MS', cursive; /* Название шрифта */
   font-size: 25px;                  /* Размер (больше цифра — больше текст) */
-  color: #a647ff;                   /* Цвет текста */
+  color: #56ff472a;                   /* Цвет текста */
   font-weight: bold;                /* Жирность (bold — жирный, normal — обычный) */
 
   /* ========================================================== */
@@ -33,63 +70,66 @@ html, body {
   /* ========================================================== */
   position: relative; /* Включает режим свободного перемещения */
   
-  top: 20px;    /* Двигает ВНИЗ (плюс, например: 20px) или ВВЕРХ (минус, например: -20px) */
-  left: 110px;   /* Двигает ВПРАВО (плюс, например: 30px) или ВЛЕВО (минус, например: -30px) */
+  top: -10px;    /* Двигает ВНИЗ (плюс, например: 20px) или ВВЕРХ (минус, например: -20px) */
+  left: 200px;   /* Двигает ВПРАВО (плюс, например: 30px) или ВЛЕВО (минус, например: -30px) */
 }
-
-.color-cube {
-  /* 1. ДЕЛАЕМ КНОПКУ КРУГЛОЙ (Ширина и высота строго одинаковые) */
-  width: 350px;
-  height: 500px;
-  border-radius: 12%;
-
-   /* ВОТ ЭТИ СТРОЧКИ ДЕЛАЮТ МАГИЮ В ИГРЕ: */
-    position: absolute;  /* 1. Элемент теперь не толкает текст и кнопки вниз */
-    z-index: -1;         /* 2. Проваливает куб на самый задний план (под текст) */
-  
-  /* 3. УПРАВЛЕНИЕ МЕСТОМ (крути эти цифры, чтобы двигать кнопку) */
-  top: 130px;  /* Минус двигает ВВЕРХ, плюс — ВНИЗ */
-  left: 30px;  /* Плюс двигает ВПРАВО, минус — ВЛЕВО */
-
-  /* 4. КРАСИВЫЙ ВИД КНОПКИ */
-  font-family: 'Impact', sans-serif; /* Название шрифта */
-  background-color: #5448ff50; /* Яркий цвет фона */
-  color: rgba(30, 253, 0, 0.74);              /* Белый цвет текста */
-  font-size: 166px;           /* Размер текста */
-  font-weight: bold;         /* Жирный шрифт текста */
-  border: none;              /* Убираем некрасивую стандартную рамку */
-  cursor: pointer;           /* Появляется палец при наведении мышки */
-}
-
-
 
 
 
 /* --- 3. ЭФФЕКТ ПРИ НАВЕДЕНИИ МЫШКИ (:hover) --- */
+/* From Uiverse.io by cssbuttons-io */ 
 #Tap {
-     width: 200px;
-  height: 200px;
-  border-radius: 40%; /* Кстати, при таких размерах она выйдет овальной и аккуратной */
-  position: relative;
-  top: 305px;  
-  left: 100px;  
+ --glow-color: rgb(5, 51, 255);
+ --glow-spread-color: rgba(191, 123, 255, 0.781);
+ --enhanced-glow-color: rgb(231, 206, 255);
+ --btn-color: rgb(100, 61, 136);
+ border: .25em solid var(--glow-color);
+ padding: 1em 3em;
+ color: var(--glow-color);
+ font-size: 25px;
+ font-weight: bold;
+ background-color: var(--btn-color);
+ border-radius: 1em;
+ outline: none;
+ box-shadow: 0 0 1em .25em var(--glow-color),
+        0 0 4em 1em var(--glow-spread-color),
+        inset 0 0 .75em .25em var(--glow-color);
+ text-shadow: 0 0 .5em var(--glow-color);
+ 
+ /* Положение кнопки на экране (меняй эти цифры, чтобы двигать её) */
+ position: absolute;
+ top: 440px;  /* Ниже / Выше */
+ left: 175px; /* Вправо / Влево */
+ 
+ transition: all 0.3s;
+}
 
-  /* ТВОИ ШРИФТЫ И ЦВЕТА */
-  font-family: 'Impact', sans-serif; 
-  background-color: #ff476f8f; 
-  color: rgb(253, 0, 0);              
-  font-size: 50px;           
-  font-weight: bold;         
-  border: none;              
-  cursor: pointer;         
-  /* Кнопка станет чуть ярче */
-  background-color: #8fe72a5b; 
-  
-  /* Тень под кнопкой станет сильнее, как будто она приподнялась */
-  box-shadow: 0 8px 25px rgba(156, 253, 0, 0.692); 
-  
-  /* Кнопка плавно увеличится на 3% (очень приятный глазу эффект) */
-  transform: scale(1.03); 
+#Tap::after {
+ pointer-events: none;
+ content: "";
+ position: absolute;
+ top: 120%;
+ left: 0;
+ height: 100%;
+ width: 100%;
+ background-color: var(--glow-spread-color);
+ filter: blur(2em);
+ opacity: .7;
+ transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+}
+
+#Tap:hover {
+ color: var(--btn-color);
+ background-color: var(--glow-color);
+ box-shadow: 0 0 1em .25em var(--glow-color),
+        0 0 4em 2em var(--glow-spread-color),
+        inset 0 0 .75em .25em var(--glow-color);
+}
+
+#Tap:active {
+ box-shadow: 0 0 0.6em .25em var(--glow-color),
+        0 0 2.5em 2em var(--glow-spread-color),
+        inset 0 0 .5em .25em var(--glow-color);
 }
 
 /* --- 4. ЭФФЕКТ ПРИ КЛИКЕ (:active) --- */
@@ -103,20 +143,98 @@ html, body {
 
 
 
-#balance {
+#bal {
   /* ========================================================== */
   /* 1. СТИЛЬ (Шрифт, размер, цвет)                             */
   /* ========================================================== */
-  font-family: 'Arial', sans-serif; /* Название шрифта */
-  font-size: 25px;                  /* Размер (больше цифра — больше текст) */
-  color: #14ec0cc0;                   /* Цвет текста */
+  font-family: 'Monotype Corsiva', 'Gabriola', cursive; /* Название шрифта */
+  font-size: 45px;                  /* Размер (больше цифра — больше текст) */
+  color: #ec1b0c;                   /* Цвет текста */
   font-weight: bold;                /* Жирность (bold — жирный, normal — обычный) */
+
+  /* ========================================================== */
+  /* ЭФФЕКТ СВЕЧЕНИЯ ТЕКСТА                                     */
+  /* ========================================================== */
+  text-shadow: 0 0 5px #ec1b0c,    /* Ближний густой свет */
+               0 0 15px #ec1b0c,   /* Среднее размытие */
+               0 0 30px #ec1b0c,   /* Мягкий рассеянный свет */
+               0 0 50px #ff4d4d;   /* Дальний яркий ореол */
 
   /* ========================================================== */
   /* 2. УПРАВЛЕНИЕ МЕСТОМ (Вверх, вниз, влево, вправо)          */
   /* ========================================================== */
   position: relative; /* Включает режим свободного перемещения */
   
-  top: 150px;    /* Двигает ВНИЗ (плюс, например: 20px) или ВВЕРХ (минус, например: -20px) */
-  left: 130px;   /* Двигает ВПРАВО (плюс, например: 30px) или ВЛЕВО (минус, например: -30px) */
+  top: 155px;    /* Двигает ВНИЗ (плюс, например: 20px) или ВВЕРХ (минус, например: -20px) */
+  left: 6px;   /* Двигает ВПРАВО (плюс, например: 30px) или ВЛЕВО (минус, например: -30px) */
+  z-index: 2;
+}
+
+
+.glow-box-standalone {
+  width: 300px;        
+  height: 90px;       
+  border-radius: 45px; 
+  background-color: #000000be; 
+  box-shadow: 0 0 45px 10px rgba(168, 85, 247, 0.6); 
+
+  /* Позиционирование */
+  position: absolute;  
+  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
+  pointer-events: none;
+
+  /* Координаты (крути их, чтобы подвинуть куда надо) */
+  top: 230px;          
+  left: 0px;         
+}
+
+.boxBal {
+  width: 100px;        
+  height: 100px;       
+  border-radius: 45px; 
+  background-color: #ff00008f; 
+  box-shadow: 0 0 45px 10px rgba(0, 121, 94, 0.788); 
+
+  /* Позиционирование */
+  position: absolute;  
+  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
+  pointer-events: none;
+
+  /* Координаты (крути их, чтобы подвинуть куда надо) */
+  top: 600px;          
+  left: 6px;         
+}
+
+.boxset {
+  width: 100px;        
+  height: 100px;       
+  border-radius: 45px; 
+  background-color: #ff00008f; 
+  box-shadow: 0 0 45px 10px rgba(0, 121, 94, 0.788); 
+
+  /* Позиционирование */
+  position: absolute;  
+  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
+  pointer-events: none;
+
+  /* Координаты (крути их, чтобы подвинуть куда надо) */
+  top: 600px;          
+  left: 150px;         
+}
+
+.boxxz {
+  width: 100px;        
+  height: 100px;       
+  border-radius: 45px; 
+  background-color: #ff00008f; 
+  box-shadow: 0 0 45px 10px rgba(0, 121, 94, 0.788); 
+
+  /* Позиционирование */
+  position: absolute;  
+  z-index: 1;          /* Подняли из-под фона сайта на слой №1 */
+  pointer-events: none;
+
+  /* Координаты (крути их, чтобы подвинуть куда надо) */
+  top: 600px;          
+  left: 300px;         
 }
